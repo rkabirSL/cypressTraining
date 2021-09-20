@@ -17,10 +17,8 @@ describe("login feature", () => {
   });
   // Test 2 tests inputs wrong credentials
   it("TEST 2: Should not login if invalid Credentials are used  ", function () {
-    cy.fixture("login-details").then((data) => {
-      const { username, password } = this.data.invalidCredentials;
-      cy.login(username, password);
-    });
+    const { username, password } = this.data.invalidCredentials;
+    cy.login(username, password);
   });
   // if wrong credentials are used in last test case then frontPageLink should not exist in the page. COMMENT: be.not.vissible does not work in the latest cypress.
   after(function () {

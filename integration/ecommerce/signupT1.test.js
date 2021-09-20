@@ -3,6 +3,7 @@
 describe("buy a product and check the quantity inside the cart", () => {
   before(function () {
     cy.visit("http://automationpractice.com/index.php");
+    cy.fixture("login-details").as("data");
   });
   it("click on a category and add multiple items to the cart", () => {
     cy.get(
@@ -29,7 +30,7 @@ describe("buy a product and check the quantity inside the cart", () => {
       "have.text",
       "2"
     );
-    //proceed to creating a new account with the existing order
+    //proceed to viewing the shopping cart
     cy.get('[title="View my shopping cart"]').click();
   });
   after("sign up to the site and checkout from the cart", function () {
@@ -38,8 +39,11 @@ describe("buy a product and check the quantity inside the cart", () => {
       "have.text",
       "Printed Summer Dress"
     );
+    //proceed to sign up on the site
     cy.get(".cart_navigation > .button > span").click();
+    cy.wait(5000);
 
+    //grab the following data from the login-details.json and assign it to the const
     cy.fixture("login-details").then((login) => {
       const {
         email,
@@ -53,10 +57,12 @@ describe("buy a product and check the quantity inside the cart", () => {
         phone,
         alias,
       } = login.shoppingDetails;
+      //enter the email to check out
       cy.get("#email_create").type(email);
-
+      //click on the proceed button
       cy.get("#SubmitCreate > span").click();
       cy.wait(10000);
+      //add the following data from const to the text form
       cy.get(":nth-child(3) > .top").click();
       cy.get("#customer_firstname").type(fName);
       cy.get("#customer_lastname").type(lName);
@@ -71,13 +77,25 @@ describe("buy a product and check the quantity inside the cart", () => {
       cy.get("#postcode").type(postcode);
       cy.get("#phone").type(phone);
       cy.get("#alias").type(alias);
+      //submit the signup form
       cy.get("#submitAccount > span").click();
-
-      //      cy.get("#id_state").type("Idaho");
     });
-    cy.get("#processAddress").click();
+    //continue to the checkout
+    cy.get(".cart_navigation > .button > span").click();
+    //agree with terms and condition
     cy.get("#cgv").click();
-    cy.get("#processCarrier").click();
-    cy.get("#cheque").click();
+    //continue to payment
+    cy.get(".cart_navigation > .button > span").click();
+    //pay by cheque and continue
+    cy.get(".cheque").click();
+    cy.get("#cart_navigation > .button > span").click();
+
+    //run a check if the total price came to 47.49
+    cy.get(".price > strong").should("have.text", "47.49");
+  });
+  it("login and check if the item details are correct", function () {
+    cy.get(".login").click();
+    const { email, password } = this.data.loginCredentials;
+    cy.shoppingLogin(email, password);
   });
 });
