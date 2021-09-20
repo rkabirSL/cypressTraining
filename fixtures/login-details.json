@@ -1,0 +1,27 @@
+{
+    "validCredentials":  {
+        "username" : "admin",
+        "password" : "password"
+    },
+    "invalidCredentials" :   {
+        "username" : "admin",
+        "password" : "password!"
+    },
+    "shoppingDetails":   {
+        "email" : "bJohnson1@downingstreet.com",
+        "fName" : "Borris",
+        "lName" : "Johnson",
+        "password": "labourParty",
+        "company" : "tory Party",
+        "address" : "10 Downing Street",
+        "city"    : "london",
+        "postcode" : "83301",
+        "phone"  : "13212312321",
+        "alias" : "work"
+    },
+    "loginCredentials": {
+        "email" : "bJohnson@downingstreet.com",
+        "password": "labourParty"
+    }
+
+}
