@@ -3,7 +3,6 @@
 describe("buy a product and check the quantity inside the cart", () => {
   before(function () {
     cy.visit("http://automationpractice.com/index.php");
-    cy.fixture("login-details").as("data");
   });
   it("click on a category and add multiple items to the cart", () => {
     cy.get(
@@ -30,10 +29,8 @@ describe("buy a product and check the quantity inside the cart", () => {
       "have.text",
       "2"
     );
-    //proceed to viewing the shopping cart
+    //proceed to creating a new account with the existing order
     cy.get('[title="View my shopping cart"]').click();
-  });
-  after("sign up to the site and checkout from the cart", function () {
     //checking if the product are in the cart
     cy.get("#product_5_19_0_0 > .cart_description > .product-name > a").should(
       "have.text",
@@ -41,9 +38,6 @@ describe("buy a product and check the quantity inside the cart", () => {
     );
     //proceed to sign up on the site
     cy.get(".cart_navigation > .button > span").click();
-    cy.wait(5000);
-
-    //grab the following data from the login-details.json and assign it to the const
     cy.fixture("login-details").then((login) => {
       const {
         email,
@@ -59,6 +53,7 @@ describe("buy a product and check the quantity inside the cart", () => {
       } = login.shoppingDetails;
       //enter the email to check out
       cy.get("#email_create").type(email);
+      cy.wait(5000);
       //click on the proceed button
       cy.get("#SubmitCreate > span").click();
       cy.wait(10000);
@@ -89,10 +84,12 @@ describe("buy a product and check the quantity inside the cart", () => {
     //pay by cheque and continue
     cy.get(".cheque").click();
     cy.get("#cart_navigation > .button > span").click();
-
     //run a check if the total price came to 47.49
     cy.get(".price > strong").should("have.text", "47.49");
   });
+  // after("sign up to the site and checkout from the cart", function () {
+  //   //grab the following data from the login-details.json and assign it to the const
+  // });
   it("login and check if the item details are correct", function () {
     cy.get(".login").click();
     const { email, password } = this.data.loginCredentials;

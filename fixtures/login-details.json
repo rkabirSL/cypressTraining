@@ -8,7 +8,7 @@
         "password" : "password!"
     },
     "shoppingDetails":   {
-        "email" : "bJohnson5@downingstreet.com",
+        "email" : "bJohnson55@downingstreet.com",
         "fName" : "Borris",
         "lName" : "Johnson",
         "password": "labourParty",
@@ -20,7 +20,7 @@
         "alias" : "work"
     },
     "loginCredentials": {
-        "email" : "bJohnson5@downingstreet.com",
+        "email" : "bJohnson55@downingstreet.com",
         "password": "labourParty"
     }
 
